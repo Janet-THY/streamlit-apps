@@ -38,7 +38,7 @@ You'll be able to import your data from a correctly-labelled CSV file, visualize
 with st.expander("Data format"): 
     st.write("Import a time series csv file which contains columns labeled as `ds` (dates) and `y`(target you wish to forecast). The input to Prophet is always a dataframe with two columns: ds and y. The ds (datestamp) column should be of a format expected by Pandas, ideally YYYY-MM-DD for a date or YYYY-MM-DD HH:MM:SS for a timestamp. The y column must be numeric, and represents the measurement we wish to forecast.")
     st.write("For example:")
-    st.image("./images/time_series_data_preprocessing_ecommerce.png")
+    st.image("./images/time_series_data_preprocessing_ecommerce.jpeg")
 
 st.sidebar.image("./images/prophet.png")
 st.sidebar.header("About")
