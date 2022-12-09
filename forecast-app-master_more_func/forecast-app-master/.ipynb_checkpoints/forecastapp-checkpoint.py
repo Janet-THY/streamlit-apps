@@ -25,7 +25,7 @@ import json
 
 st.set_page_config(page_title ="Time Series Forecast App",
                     initial_sidebar_state="collapsed",
-                    page_icon="🔮📈")
+                    page_icon="🔮")
 
 
 tabs = ["Application","About"]
@@ -131,7 +131,7 @@ rmses.append(df_p['rmse'].values[0])
 
 # Find the best parameters
 tuning_results = pd.DataFrame(all_params)
-tuning_results['rmse'] = rmsest
+tuning_results['rmse'] = rmses
 st.write(tuning_results)
 
 best_params = all_params[np.argmin(rmses)]

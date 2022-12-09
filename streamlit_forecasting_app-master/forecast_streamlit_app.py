@@ -7,25 +7,51 @@ from prophet.diagnostics import cross_validation
 from prophet.plot import plot_cross_validation_metric
 import base64
 
-st.title('📈 ML Time Series Forecasting')
+def load_csv():
+    df_input = pd.DataFrame()  
+    df_input=pd.read_csv(input,sep=None ,engine='python', encoding='utf-8',
+                            parse_dates=True,
+                            infer_datetime_format=True)
+    return df_input
+
+def prep_data(df):
+    df_input = df.rename({date_col:"ds",metric_col:"y"},errors='raise',axis=1)
+    st.markdown("The selected date column is now labeled as **ds** and the values columns as **y**")
+    df_input = df_input[['ds','y']]
+    df_input =  df_input.sort_values(by='ds',ascending=True)
+    return df_input
+
+
+st.title('e-4Cast Time Series Forecasting 📈')
 
 """
-This interactive web app uses Facebook's open-source Prophet library to generate future forecast from an correctly labeled dataset.
-You'll be able to import your data from a CSV file, visualize trends and features, analyze forecast performance, and finally download the created forecast. 
+This interactive web app allows you to generate future forecast in a few minutes!
+The forecasting library used is Facebook's open-source Prophet library [Prophet](https://facebook.github.io/prophet/). 
+You'll be able to import your data from a correctly-labelled CSV file, visualize trends and features, analyze forecast performance, and finally download the created forecast. 
 
 **In beta mode**
-
-Inspired by Zach Renwick: https://twitter.com/zachrenwick
 """
 
 """
 ### Step 1: Import Data
 """
-df = st.file_uploader('Import a time series csv file here. Columns must be labeled ds and y. The input to Prophet is always a dataframe with two columns: ds and y. The ds (datestamp) column should be of a format expected by Pandas, ideally YYYY-MM-DD for a date or YYYY-MM-DD HH:MM:SS for a timestamp. The y column must be numeric, and represents the measurement we wish to forecast.', type='csv')
+with st.expander("Data format"): 
+    st.write("Import a time series csv file which contains columns labeled as `ds` (dates) and `y`(target you wish to forecast). The input to Prophet is always a dataframe with two columns: ds and y. The ds (datestamp) column should be of a format expected by Pandas, ideally YYYY-MM-DD for a date or YYYY-MM-DD HH:MM:SS for a timestamp. The y column must be numeric, and represents the measurement we wish to forecast.")
+    st.write("For example:")
+    st.image("./images/time series data preprocessing ecommerce.png")
+
+st.sidebar.image("./images/prophet.png")
+st.sidebar.header("About")
+st.sidebar.markdown("Official documentation of **[Facebook Prophet](https://facebook.github.io/prophet/)**")
+st.sidebar.markdown("Official documentation of **[Streamlit](https://docs.streamlit.io/en/stable/getting_started.html)**")
+st.sidebar.write("")
+st.sidebar.write("Created on 08/12/2022")
+    
+df = st.file_uploader('', type='csv')
 
 st.info(
 f"""
-                👆 Upload a .csv file first. Sample to try: [peyton_manning_wiki_ts.csv](https://raw.githubusercontent.com/zachrenwick/streamlit_forecasting_app/master/example_data/example_wp_log_peyton_manning.csv)
+                👆 Upload a .csv file first. Sample to try: [daily_purchase_order.csv](https://git.generalassemb.ly/janet-thy/capstone/blob/main/datasets/osc_pur_daily_for_test.csv)
                 """
         )
 
@@ -37,7 +63,7 @@ if df is not None:
     
     max_date = data['ds'].max()
     #st.write(max_date)
-
+        
 """
 ### Step 2: Select Forecast Horizon
 
@@ -89,3 +115,17 @@ if df is not None:
     b64 = base64.b64encode(csv_exp.encode()).decode()  # some strings <-> bytes conversions necessary here
     href = f'<a href="data:file/csv;base64,{b64}">Download CSV File</a> (right-click and save as ** &lt;forecast_name&gt;.csv**)'
     st.markdown(href, unsafe_allow_html=True)
+    
+"""
+### End of page
+
+To learn more about forecasting model or my inspiration.
+"""
+with st.expander("Explanation"):
+    st.image("./images/prophet.png")
+    st.header("About")
+    st.markdown("Official documentation of **[Facebook Prophet](https://facebook.github.io/prophet/)**")
+    st.markdown("Official documentation of **[Streamlit](https://docs.streamlit.io/en/stable/getting_started.html)**")
+    st.write("")
+    st.write("Inspired by [Zach Renwick](https://twitter.com/zachrenwick)")
+    st.write("Created on 08/12/2022")
