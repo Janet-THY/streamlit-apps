@@ -37,13 +37,6 @@ You'll be able to import your data from a correctly-labelled CSV file, visualize
 """
 with st.expander("Data format"): 
     st.write("Import a time series csv file which contains columns labeled as `ds` (dates) and `y`(target you wish to forecast). The input to Prophet is always a dataframe with two columns: ds and y. The ds (datestamp) column should be of a format expected by Pandas, ideally YYYY-MM-DD for a date or YYYY-MM-DD HH:MM:SS for a timestamp. The y column must be numeric, and represents the measurement we wish to forecast.")
-
-st.sidebar.image("./images/prophet.png")
-st.sidebar.header("About")
-st.sidebar.markdown("Official documentation of **[Facebook Prophet](https://facebook.github.io/prophet/)**")
-st.sidebar.markdown("Official documentation of **[Streamlit](https://docs.streamlit.io/en/stable/getting_started.html)**")
-st.sidebar.write("")
-st.sidebar.write("Created on 08/12/2022")
     
 df = st.file_uploader('', type='csv')
 
