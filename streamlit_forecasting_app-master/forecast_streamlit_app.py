@@ -120,7 +120,6 @@ if df is not None:
 To learn more about forecasting model or my inspiration.
 """
 with st.expander("Explanation"):
-    st.image("./images/prophet.png")
     st.header("About")
     st.markdown("Official documentation of **[Facebook Prophet](https://facebook.github.io/prophet/)**")
     st.markdown("Official documentation of **[Streamlit](https://docs.streamlit.io/en/stable/getting_started.html)**")
